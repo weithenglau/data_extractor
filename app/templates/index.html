@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Document Upload and Template Selection</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+    <h2>Upload Document and Select Template</h2>
+    <form action="/upload-file" method="post" enctype="multipart/form-data">
+        <div>
+            <label for="document">Upload Document:</label>
+            <input type="file" id="document" name="document" accept=".jpg,.pdf" required>
+        </div>
+        <div>
+            <label for="template_name">Select Template:</label>
+            <select id="template_name" name="template_name" required>
+                <option value="tm">TM</option>
+                <option value="tnb_physical">TNB Physical</option>
+                <option value="tnb_digital">TNB Digital</option>
+            </select>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
