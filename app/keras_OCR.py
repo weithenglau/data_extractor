@@ -4,10 +4,6 @@ from io import BytesIO
 from PIL import Image
 
 class KerasOCR:
-    def __init__(self):
-        # Perform any initialization tasks here, such as configuring the OCR pipeline
-        self.pipeline = keras_ocr.pipeline.Pipeline()
-
     def perform_OCR(self, regions):
         """
         Perform Optical Character Recognition (OCR) on the given regions.
@@ -21,7 +17,7 @@ class KerasOCR:
 
         output_dict = {}
         for field, region in regions.items():
-            prediction_groups = self.pipeline.recognize([region])
+            prediction_groups = keras_ocr.pipeline.Pipeline().recognize([region])
             merged_texts = self.merge_predictions(prediction_groups)
             output_dict[field] = merged_texts
 

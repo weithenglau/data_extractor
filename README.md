@@ -5,19 +5,26 @@ This application provides a web interface for uploading documents (images and PD
 ## Features
 
 - **File Upload**: Supports uploading of JPG and PDF files for text extraction.
-- **Text Extraction**: Utilizes `pytesseract` for OCR to extract text from uploaded documents.
+- **Text Extraction**: Utilizes `pytesseract` or `KerasOCR` for OCR to extract text from uploaded documents.
 - **Template-based Extraction**: Supports extracting text from specific document areas defined by templates.
 - **Test Results**: Compares extracted text against predefined ground truths and presents test results.
 
 ## Requirements
-
+You could install the python libraries in the requirements.txt
 - Python 3.9+
-- FastAPI
-- PyTesseract
-- pdf2image
-- PIL (Python Imaging Library)
-- YAML for Python (PyYAML)
+- uvicorn==0.27.1
+- FastAPI==0.110.0
+- PyTesseract==0.3.10
+- pdf2image==1.17.0
+- pillow==10.2.0
+- python-mutipart==0.0.9
+- PyYAML==6.0.1
+- kerasOCR==0.9.3
+- tensorflow==2.15.0
+- keras==2.15.0
+- jinja2==3.1.3
 - Poppler for Windows/Linux/macOS
+
 
 ## Setup
 
@@ -42,9 +49,14 @@ pip install fastapi uvicorn pytesseract pdf2image pillow pyyaml
 
 Poppler is required for `pdf2image` to convert PDF files into images for OCR processing.
 
-4. **Run the application**:
-uvicorn main:app --reload
+3. **Install Tesserarct**:
+For Windows, additional steps are needed to install Tessaract on their system. Refer to https://ironsoftware.com/csharp/ocr/blog/ocr-tools/install-tesseract/
 
+4. **Run the application**:
+  ```
+ cd to app
+ and run python main.py
+   ```
 
 This command starts the FastAPI server. Access the web interface at `http://127.0.0.1:8000`.
 
@@ -52,6 +64,7 @@ This command starts the FastAPI server. Access the web interface at `http://127.
 
 - Navigate to `http://127.0.0.1:8000` in your web browser to access the file upload interface.
 - Select a JPG or PDF file to upload and choose a template_name for text extraction if necessary.
+- Check *Enable Keras OCR* if you wish to use KerasOCR instead pytesseract for the text extraction.  
 - Submit the form to process the document. The extracted text and any test results will be displayed on a new page.
 
 ## Using CURL to Post Requests with Base64-Encoded Document
@@ -65,12 +78,13 @@ First, encode your document to a base64 string.
 On Linux or macOS, you can use the following command:
 
 ```bash
-base64 /path/to/your/document.pdf > document_base64.txt
+openssl base64 -in <infile> -out <outfile>
 
 curl -X POST "http://127.0.0.1:8000/upload-base64" \
      -H "Content-Type: application/json" \
-     -d '{"document": "$(cat document_base64.txt)", "template_name": "your_template_name"}'
+     -d '{"document": "$(cat <outfile>)", "template_name": "your_template_name", "checkboxAI":0}'
 ```
+where the document_base64.txt contain the base64 string of the document, template_name represents the template type (TM, TNB Physical, TNB Digital) and the checkboxAI enables KerasOCR. 
 
 On Windows, you can use PowerShell to encode the document. Open PowerShell and run:
 
@@ -79,7 +93,7 @@ On Windows, you can use PowerShell to encode the document. Open PowerShell and r
 
 curl.exe -X POST "http://127.0.0.1:8000/upload-base64" `
      -H "Content-Type: application/json" `
-     -d '{"document": "'$(Get-Content document_base64.txt -Raw)'", "template_name": "your_template_name"}'
+     -d '{"document": "'$(Get-Content document_base64.txt -Raw)'", "template_name": "your_template_name", "checkboxAI":0}'
 ```
 
 ## Structure

@@ -29,7 +29,7 @@ def process_document(base64_encoded_content, template_name, checkboxAI):
     """
     Process the document by decoding, extracting regions, extracting text, and running tests.
     """
-    templates_coord = load_templates_yaml('../templates.yaml')
+    templates_coord = load_templates_yaml(r'../templates.yaml')
     image = decode_document(base64_encoded_content, template_name)
     selected_template_coord = extract_fields(template_name, templates_coord)
     regions = crop_ROI(image, selected_template_coord)
@@ -41,7 +41,7 @@ def process_document(base64_encoded_content, template_name, checkboxAI):
         extracted_text= extractor.perform_OCR(regions)
 
     output_json_path= export_to_json(extracted_text)
-    groundtruth_json_path = os.path.join('../ground_truth', f'{template_name}.json')
+    groundtruth_json_path = os.path.join(r'../ground_truth', f'{template_name}.json')
     test_results = run_test(output_json_path, groundtruth_json_path)
 
     return extracted_text, test_results
@@ -53,14 +53,16 @@ async def main(request: Request):
 
 # Route to handle document upload and text extraction
 @app.post("/upload-file")
-async def upload_file(request: Request, document: UploadFile = File(...), template_name: str = Form(...), checkboxAI: bool=False):
+async def upload_file(request: Request, document: UploadFile = File(...), template_name: str = Form(...), checkboxAI: str = Form("false")):
     try:
         # Read and encode the uploaded file content to base64
         file_content = await document.read()
 
         base64_encoded_content = base64.b64encode(file_content).decode()
 
-        extracted_text, test_results = process_document(base64_encoded_content, template_name, checkboxAI)
+        checkboxAI_bool = checkboxAI.lower() in ["true", "on", "1"]
+
+        extracted_text, test_results = process_document(base64_encoded_content, template_name, checkboxAI_bool)
         
         # Render the results page with extracted text and test results
         return templates.TemplateResponse("results.html", {
