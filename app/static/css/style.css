@@ -1,3 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
@@ -8,11 +14,13 @@ body {
 
 h2 {
   color: #444;
+  text-align:center;
 }
 
 form {
   background-color: #fff;
   padding: 20px;
+  padding-bottom: 55px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   max-width: 500px;
@@ -56,31 +64,32 @@ button[type="submit"]:hover {
 /* Extend the existing styles.css with these additional styles */
 
 .container {
-  max-width: 800px;
-  margin: auto;
-  padding: 20px;
   background-color: #fff;
+  padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  max-width: 600px; /* Reduced max-width for a smaller container */
+  margin: 20px auto;
 }
 
+/* Adjusting the font size for the result headers and text */
 .result-header {
-  font-size: 24px;
-  color: #333;
-  margin-bottom: 10px;
+  font-size: 18px; /* Reduced from a larger size if necessary */
 }
 
 .result-text, .test-result {
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  padding: 15px;
-  border-radius: 4px;
-  margin-bottom: 20px;
-  white-space: pre-wrap; /* Keeps the formatting of text */
+  font-size: 14px; /* Reduced font size for content */
 }
 
-.test-results {
-  margin-top: 30px;
+/* If you wish to reduce the overall size of the containers too */
+.result-container, .test-results {
+  padding: 10px; /* Reduced padding inside containers */
+  margin-bottom: 15px; /* Adjust spacing between sections */
+}
+
+/* Adjust the font size of the content within .test-result specifically if needed */
+.test-result {
+  font-size: 14px; /* Ensuring consistency in font size reduction */
 }
 
 .test-result {
@@ -108,5 +117,12 @@ a {
 
 a:hover {
   background-color: #0056b3;
+}
+
+.form-group input[type="checkbox"],
+.form-group label {
+    margin-top: 10px;
+    display: inline-block;
+    vertical-align: baseline;
 }
 

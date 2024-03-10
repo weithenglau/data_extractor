@@ -4,7 +4,15 @@ import json
 import re
 
 def preprocess_text(text):
-    """Preprocesses the text by removing newlines, and leading/trailing/extra spaces."""
+    """
+    Preprocesses the text by applying various transformations to normalize it for comparison.
+    
+    Parameters:
+    - text (str): The text to preprocess.
+    
+    Returns:
+    - str: The preprocessed text.
+    """
     # Remove newlines
     text = text.replace('\n', ' ')
     # Remove Space
@@ -28,7 +36,15 @@ def preprocess_text(text):
     return text
 
 def load_json(file_path):
-    """Loads JSON data from a file with error handling."""
+    """
+    Loads JSON data from a specified file path with error handling.
+    
+    Parameters:
+    - file_path (str): The path to the JSON file.
+    
+    Returns:
+    Tuple containing the JSON data (or None if an error occurs) and an error message (or None).
+    """
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             return json.load(file), None
@@ -42,11 +58,30 @@ def load_json(file_path):
     return None, error_msg
 
 def compute_similarity(str1, str2):
-    """Compute the similarity between two strings using SequenceMatcher."""
+    """
+    Compute the similarity between two strings using the SequenceMatcher algorithm.
+    
+    Parameters:
+    - str1 (str): The first string to compare.
+    - str2 (str): The second string to compare.
+    
+    Returns:
+    - float: The similarity ratio between the two strings.
+    """
     return difflib.SequenceMatcher(None, str1, str2).ratio()
 
 def compare_jsons(output_data, ground_truth_data):
-    """Compares two JSON objects and computes accuracy based on text similarity."""
+    """
+    Compares two JSON objects (output data and ground truth data) for accuracy and similarity.
+    
+    Parameters:
+    - output_data (dict): The output data as a JSON object.
+    - ground_truth_data (dict): The ground truth data as a JSON object.
+    
+    Returns:
+    - dict: A dictionary containing comparison results, including exact matches, total fields,
+            overall similarity, and accuracy.
+    """
     exact_matches = 0
     total_fields = 0
     similarity_scores = []
@@ -79,6 +114,15 @@ def compare_jsons(output_data, ground_truth_data):
     }
 
 def run_test(output_file_path='../output.json', ground_truth_file_path='ground_truth.json'):
+    """
+    Runs a test comparing the extracted text in the output JSON file against the ground truth JSON file.
+    
+    Parameters:
+    - output_file_path (str): Path to the output JSON file.
+    - ground_truth_file_path (str): Path to the ground truth JSON file.
+    
+    Prints and returns the test results.
+    """
     output_data, error = load_json(output_file_path)
     if error:
         print(f"Error loading output JSON: {error}")
@@ -94,7 +138,7 @@ def run_test(output_file_path='../output.json', ground_truth_file_path='ground_t
     return results
 
 if __name__ == "__main__":
-    # Create the parser
+    # Command-line interface for running the test with specified JSON files
     parser = argparse.ArgumentParser(description="Compare JSON output to ground truth for accuracy.")
 
     # Add arguments
