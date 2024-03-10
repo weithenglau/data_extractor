@@ -29,15 +29,14 @@ You could install the python libraries in the requirements.txt
 ## Setup
 
 1. **Clone the repository**:
-git clone <repository-url>
-cd <repository-directory>
+git clone https://github.com/weithenglau/data_extractor.git
 
 2. **Install dependencies**:
-pip install fastapi uvicorn pytesseract pdf2image pillow pyyaml
+pip install the dependencies as listed in requirements.txt
 
 
 3. **Install Poppler**:
-- For Windows, download binaries from [Poppler Windows](http://blog.alivate.com.au/poppler-windows/), and add the `bin` directory to your PATH.
+- For Windows, download binaries from [Poppler Windows][(https://github.com/oschwartz10612/poppler-windows/releases/]), and add the `bin` directory to your PATH.
 - For Ubuntu/Debian, install Poppler using:
   ```
   sudo apt-get install poppler-utils
@@ -47,15 +46,18 @@ pip install fastapi uvicorn pytesseract pdf2image pillow pyyaml
   brew install poppler
   ```
 
-Poppler is required for `pdf2image` to convert PDF files into images for OCR processing.
+  Poppler is required for `pdf2image` to convert PDF files into images for OCR processing.
 
-3. **Install Tesserarct**:
+4. **Install Tesserarct**:
 For Windows, additional steps are needed to install Tessaract on their system. Refer to https://ironsoftware.com/csharp/ocr/blog/ocr-tools/install-tesseract/
 
-4. **Run the application**:
+5. **Include <template_name>.json in the ground_truth folder**:
+Before running the application, please make sure you copy and paste the ground truth jsons for each template into the ground_truth folder. 
+
+6. **Run the application**:
   ```
- cd to app
- and run python main.py
+ cd app
+ python main.py
    ```
 
 This command starts the FastAPI server. Access the web interface at `http://127.0.0.1:8000`.
