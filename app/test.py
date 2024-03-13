@@ -17,6 +17,8 @@ def preprocess_text(text):
     text = text.replace('\n', ' ')
     # Remove Space
     text = text.replace(' ', '')
+    # Converting to lowercase
+    text = text.lower()
     # Remove leading and trailing spaces
     text = text.strip()
     # Replace multiple spaces with a single space
@@ -25,11 +27,11 @@ def preprocess_text(text):
     text = re.sub(r'(\d{2})\.(\d{2})\.(\d{4})', lambda x: x.group(3)[2:] + x.group(2) + x.group(1), text)
     # Convert dates from 13Jul2022 to 220713
     month_map = {
-        "Jan": "01", "Feb": "02", "Mar": "03", "Apr": "04", 
-        "May": "05", "Jun": "06", "Jul": "07", "Aug": "08", 
-        "Sep": "09", "Oct": "10", "Nov": "11", "Dec": "12"
+        "jan": "01", "feb": "02", "mar": "03", "apr": "04", 
+        "may": "05", "jun": "06", "jul": "07", "aug": "08", 
+        "sep": "09", "oct": "10", "nov": "11", "dec": "12"
     }
-    text = re.sub(r'(\d{2})(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)(\d{4})', 
+    text = re.sub(r'(\d{2})(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)(\d{4})', 
                   lambda x: x.group(3)[2:] + month_map[x.group(2)] + x.group(1), text)
     # Remove square and curly brackets, commas, and dots
     text = re.sub(r'[\[\]{},.]', '', text)
@@ -134,7 +136,7 @@ def run_test(output_file_path='../output.json', ground_truth_file_path='ground_t
         return
     
     results = compare_jsons(output_data, ground_truth_data)
-    print(f"Test Results: {results}")
+    
     return results
 
 if __name__ == "__main__":
