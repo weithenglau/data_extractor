@@ -10,6 +10,7 @@ from utils import crop_ROI, decode_document, extract_fields, export_to_json, loa
 import base64
 import shutil
 import os
+import traceback
 
 app = FastAPI()
 
@@ -73,6 +74,8 @@ async def upload_file(request: Request, document: UploadFile = File(...), templa
         })
     except Exception as e:
         # Handle exceptions by returning an HTTP error response
+        # print exception
+        print(traceback.format_exc())
         raise HTTPException(status_code=500, detail=str(e))
     finally:
         # Ensure the uploaded file is closed
@@ -96,5 +99,5 @@ async def upload_base64(request_data: ExtractionRequest):
 # Entry point to run the application when executed directly
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    uvicorn.run(app, host="127.0.0.1", port=8001)
 
