@@ -8,6 +8,8 @@ import yaml
 from pdf2image import convert_from_path
 from PIL import Image, ImageEnhance
 
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+
 class TextExtractor:
     def __init__(self, language='eng'):
         self.language = language

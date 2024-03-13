@@ -40,7 +40,7 @@ def decode_base64_to_image(data, doc_type, template_name):
         pdf_file = io.BytesIO(img_data)
 
         # Convert the PDF content into an image
-        images = convert_from_bytes(pdf_file.read())
+        images = convert_from_bytes(pdf_file.read(), poppler_path=r'..\poppler-24.02.0\Library\bin')
 
         # Return the first image if available
         return images[0] if images else None
