@@ -2,6 +2,7 @@ import keras_ocr
 import base64
 from io import BytesIO
 from PIL import Image
+import numpy as np
 
 class KerasOCR:
     def perform_OCR(self, regions):
@@ -17,10 +18,15 @@ class KerasOCR:
 
         output_dict = {}
         for field, region in regions.items():
+            # fix to error 2
+            region = region.convert("RGB") if region.mode == 'L' else region
+            # fix to error 1
+            region = np.array(region)
             prediction_groups = keras_ocr.pipeline.Pipeline().recognize([region])
             merged_texts = self.merge_predictions(prediction_groups)
             output_dict[field] = merged_texts
-
+            # fix to error 3
+            output_dict[field] = '\n'.join(output_dict[field])
         return output_dict
 
     def merge_predictions(self, prediction_groups):
