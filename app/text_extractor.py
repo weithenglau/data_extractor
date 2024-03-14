@@ -1,13 +1,9 @@
-import base64
-import io
-import json
+from dotenv import load_dotenv
+import os
 import pytesseract # Importing the pytesseract library for OCR capabilities.
-import tempfile
-import yaml
 
-from pdf2image import convert_from_path
-from PIL import Image, ImageEnhance
-
+load_dotenv()
+pytesseract.pytesseract.tesseract_cmd = os.getenv("TESSERACT_EXE_PATH")
 
 class TextExtractor:
     def __init__(self, language='eng'):

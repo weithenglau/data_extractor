@@ -8,7 +8,6 @@ from text_extractor import TextExtractor
 from keras_OCR import KerasOCR
 from utils import crop_ROI, decode_document, extract_fields, export_to_json, load_templates_yaml
 import base64
-import shutil
 import os
 import traceback
 

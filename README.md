@@ -34,7 +34,6 @@ git clone https://github.com/weithenglau/data_extractor.git
 2. **Install dependencies**:
 pip install the dependencies as listed in requirements.txt
 
-
 3. **Install Poppler**:
 - For Windows, download binaries from [Poppler Windows][(https://github.com/oschwartz10612/poppler-windows/releases/]), and add the `bin` directory to your PATH.
 - For Ubuntu/Debian, install Poppler using:
@@ -49,12 +48,19 @@ pip install the dependencies as listed in requirements.txt
   Poppler is required for `pdf2image` to convert PDF files into images for OCR processing.
 
 4. **Install Tesserarct**:
-For Windows, additional steps are needed to install Tessaract on their system. Refer to https://ironsoftware.com/csharp/ocr/blog/ocr-tools/install-tesseract/
+For Windows, additional steps are needed to install Tessaract on their system. Refer to https://ironsoftware.com/csharp/ocr/blog/ocr-tools/install-tesseract/ß
 
-5. **Include <template_name>.json in the ground_truth folder**:
+5. **Create a `.env` file in the root directory of the project.**:
+Populate the `.env` file with the following variables depending on where your executable binary files and executable are stored:
+```plaintext
+POPPLER_PATH=C:\Program Files\poppler-24.02.0-0\Library\bin
+TESSERACT_EXE_PATH=C:\Program Files\Tesseract-OCR\tesseract.exe
+```
+
+6. **Include <template_name>.json in the ground_truth folder**:
 Before running the application, please make sure you copy and paste the ground truth jsons for each template into the ground_truth folder. 
 
-6. **Run the application**:
+7. **Run the application**:
   ```
  cd app
  python main.py

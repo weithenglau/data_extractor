@@ -1,6 +1,7 @@
 decoded_img
 output.json
 .venv
+.env
 ground_truth/TM.json
 ground_truth/tnb_digital.json
 ground_truth/tnb_physical.json

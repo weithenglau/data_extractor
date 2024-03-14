@@ -1,10 +1,14 @@
+from dotenv import load_dotenv
 from pdf2image import convert_from_bytes
 from PIL import Image, ImageEnhance
 
 import base64
 import io
 import json
+import os
 import yaml
+
+load_dotenv()
 
 def crop_ROI(image, templates_coord):
     """
@@ -40,7 +44,7 @@ def decode_base64_to_image(data, doc_type, template_name):
         pdf_file = io.BytesIO(img_data)
 
         # Convert the PDF content into an image
-        images = convert_from_bytes(pdf_file.read())
+        images = convert_from_bytes(pdf_file.read(), poppler_path=os.getenv('POPPLER_PATH'))
 
         # Return the first image if available
         return images[0] if images else None
