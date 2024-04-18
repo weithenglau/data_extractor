@@ -1,9 +1,12 @@
 from dotenv import load_dotenv
 import os
+import platform
 import pytesseract # Importing the pytesseract library for OCR capabilities.
 
 load_dotenv()
-pytesseract.pytesseract.tesseract_cmd = os.getenv("TESSERACT_EXE_PATH")
+if platform.system() == 'Windows':
+    pytesseract.pytesseract.tesseract_cmd = os.getenv("TESSERACT_EXE_PATH")
+    print('pytesseract.pytesseract.tesseract_cmd', pytesseract.pytesseract.tesseract_cmd)
 
 class TextExtractor:
     def __init__(self, language='eng'):
